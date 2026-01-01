@@ -37,38 +37,37 @@ public class Spielstein {
 
     private boolean movesOut() {
         char dir = brett.getBrett()[getCurrentRow()][getCurrentCol()].getDirection();
-        return dir == 'U' || dir == 'D' || dir == 'L' || dir == 'R';
+
+        if (dir == 'U') {
+            return (getCurrentRow() == 0);
+        } else if (dir == 'D'){
+            return (getCurrentRow() == brett.getDim() - 1);
+        } else if (dir == 'L') {
+            return (getCurrentCol() == 0);
+        } else if (dir == 'R') {
+            return (getCurrentCol() == brett.getDim() - 1);
+        }
+        return false;
     }
 
     public void go(int n) {
         for (int i = 0; i < n; i++) {
             Feld feld = brett.getBrett()[getCurrentRow()][getCurrentCol()];
 
-            if (feld.isBoese()) {
+            if (movesOut() || feld.isBoese()) {
                 break;
-            } else {
-                char dir = feld.getDirection();
+            }
 
-                int newRow = getCurrentRow();
-                int newCol = getCurrentCol();
+            char dir = feld.getDirection();
 
-                if (dir == 'U') {
-                    newRow++;
-                } else if (dir == 'D') {
-                    newRow--;
-                } else if (dir == 'L') {
-                    newCol--;
-                } else if (dir == 'R') {
-                    newCol++;
-                }
-
-                if (newRow < 0 || newRow >= brett.getDim() ||
-                        newCol < 0 || newCol >= brett.getDim()) {
-                    break;
-                } else {
-                    setCurrentRow(newRow);
-                    setCurrentCol(newCol);
-                }
+            if (dir == 'U') {
+                setCurrentRow(getCurrentRow() - 1);
+            } else if (dir == 'D'){
+                setCurrentRow(getCurrentRow() + 1);
+            } else if (dir == 'L') {
+                setCurrentCol(getCurrentCol() - 1);
+            } else if (dir == 'R') {
+                setCurrentCol(getCurrentCol() + 1);
             }
         }
     }
