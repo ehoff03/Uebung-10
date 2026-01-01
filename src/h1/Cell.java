@@ -58,7 +58,7 @@ public class Cell {
     }
 
     public void countLivingNeighbors(Cell[][] gridArray) {
-        int counterOfLivingNeighbors = 0;
+        int counter = 0;
 
         for (int r = getIndexRow() - 1; r <= getIndexRow() + 1; r++) {
             for (int c = getIndexCol() - 1; c <= getIndexCol() + 1; c++) {
@@ -69,13 +69,14 @@ public class Cell {
                     continue;
                 }
                 if (gridArray[r][c].isAlive()) {
-                    counterOfLivingNeighbors++;
+                    counter++;
                 }
             }
         }
-        setNumLivingNeighbors(counterOfLivingNeighbors);
+        setNumLivingNeighbors(counter);
         decideNextStatus();
     }
+
     private void decideNextStatus() {
         if (isAlive()) {
             setAliveNextGen(getNumLivingNeighbors() == 2 || getNumLivingNeighbors() == 3);
